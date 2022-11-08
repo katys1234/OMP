@@ -1,0 +1,17 @@
+#include <stdio.h> 
+#include <omp.h> 
+#include <locale>
+int main()
+{
+	int potok, chislo,k;
+	setlocale(0, "rus");
+	omp_set_num_threads(omp_get_num_procs());
+#pragma omp parallel private (potok) 
+	{
+		chislo = omp_get_num_threads();
+		potok = omp_get_thread_num();
+		k++;
+		printf("Hello World from thread = %d\n", potok);
+	}
+		printf("Number of threads = %d\n", chislo);
+}
