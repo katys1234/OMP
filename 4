@@ -1,0 +1,31 @@
+#include <stdio.h> 
+#include <omp.h> 
+#include <locale>
+#include <iostream>
+#include <string>
+
+using std::cout;
+using std::cin;
+using std::endl;
+
+int main()
+{
+	// id - номер потока
+	int i, id, n, a, t;
+	// t - счетчик
+	t = 0;
+	a = 0;
+	setlocale(0, "rus");
+
+#pragma omp parallel private (id) shared (a,t)
+	{
+		n = omp_get_num_threads();
+		id = omp_get_thread_num();
+		while (t != id) {}
+		a += n - id;
+		printf("%d ",id);
+		t += 1;
+	}
+	cout << "\n";
+	cout << "a = "<< a;
+}
